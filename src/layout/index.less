@@ -22,6 +22,15 @@
       box-shadow: 2px 3px 8px 1px #edeaea;
       background-color: var(--header-background-color);
       color: var(--text-color);
+
+      .my-layout-container-theme {
+        display: block;
+      }
+
+      .my-layout-container-drawer-control {
+        display: none;
+        cursor: pointer;
+      }
     }
 
     .my-layout-container-content {
@@ -30,6 +39,11 @@
       color: var(--text-color);
     }
   }
+}
+
+.my-layout-container-drawerSider {
+  border-radius: 6px;
+  border-inline-end: none !important;
 }
 
 html[theme='dark'] {
@@ -45,9 +59,16 @@ html[theme='dark'] {
 
 @media screen and (max-width: 750px) {
   .my-layout-container {
-    .my-layout-container-sider {
-      width: 0;
-      overflow: hidden;
+    .my-layout-container-main {
+      .my-layout-container-header {
+        .my-layout-container-theme {
+          display: none;
+        }
+
+        .my-layout-container-drawer-control {
+          display: block;
+        }
+      }
     }
   }
 }

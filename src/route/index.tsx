@@ -75,6 +75,36 @@ export const menus: routeProps[] = [
       },
     ],
   },
+  {
+    types: 'subMenu',
+    key: '/user',
+    label: '用户中心',
+    icon: <MailOutlined />,
+    children: [
+      {
+        types: 'menu',
+        key: '/user/user-1',
+        path: '/user/user-1',
+        label: '用户中心-1',
+        element: (
+          <Layout>
+            <div>用户中心-1</div>
+          </Layout>
+        ),
+      },
+      {
+        types: 'menu',
+        key: '/user/user-2',
+        path: '/user/user-2',
+        label: '用户中心-2',
+        element: (
+          <Layout>
+            <div>用户中心-2</div>
+          </Layout>
+        ),
+      },
+    ],
+  },
 ]
 
 function flatLayoutMenuRoutes() {

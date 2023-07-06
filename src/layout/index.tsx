@@ -1,23 +1,19 @@
 import React, { useEffect, useMemo, useState } from 'react'
-import { Breadcrumb, Menu, Switch } from 'antd'
-import { BulbOutlined, StarOutlined } from '@ant-design/icons'
-import { useNavigate } from 'react-router-dom'
-import { useSelector, useDispatch } from 'react-redux'
-import type { MenuProps } from 'antd'
+import { Breadcrumb } from 'antd'
+import { AlignRightOutlined } from '@ant-design/icons'
 import { menus } from '@/route'
-import { toggleTheme } from '@/store/theme-reducer'
 import './index.less'
 
-const Layout: React.FC<{ children: React.ReactNode }> = props => {
-  const [currentPath, setCurrentPath] = useState<string>(window.location.pathname)
+import Sider from './sider'
+import DrawerMenu from './drawer-menu'
+import ThemeSwitch from './theme-switch'
 
+const Layout: React.FC<{ children: React.ReactNode }> = props => {
   const [bread, setBread] = useState<{ title: string }[]>([])
 
-  const theme = useSelector<any>(state => state.theme.theme) as string
+  const [showDrawer, setShowDrawer] = useState<boolean>(false)
 
-  const dispatch = useDispatch()
-
-  const navigate = useNavigate()
+  const [showMenu, setShowMenu] = useState<boolean>(false)
 
   const menuList = useMemo(() => {
     // 递归增加面包屑
@@ -61,49 +57,47 @@ const Layout: React.FC<{ children: React.ReactNode }> = props => {
     setBread(menuList[1].find(item => item.path === window.location.pathname)?.breadList!)
   }
 
-  /**
-   * @description: 点击menu菜单的回调
-   */
-  const menuClick = (e: { key: string; keyPath: string[] }) => {
-    setCurrentPath(e.keyPath[0])
-    navigate(e.keyPath[0])
-  }
-
-  useEffect(() => {
-    setCurrentPath(window.location.pathname)
-  }, [])
-
   useEffect(() => {
     getBreadcrumb()
   }, [window.location.pathname])
 
+  useEffect(() => {
+    window.addEventListener('resize', function () {
+      if (window.innerWidth > 750) {
+        setShowDrawer(false)
+        setShowMenu(true)
+      } else {
+        setShowMenu(false)
+      }
+    })
+
+    return () => {
+      window.removeEventListener('resize', function () {})
+    }
+  }, [])
+
   return (
     <div className="my-layout-container">
-      <div className="my-layout-container-sider">
-        <Menu
-          mode="inline"
-          style={{ width: '100%', height: '100%' }}
-          defaultSelectedKeys={[currentPath]}
-          onClick={menuClick}
-          defaultOpenKeys={menus.map(item => item.key as string)}
-          items={menus as MenuProps['items']}
-        />
-      </div>
+      {showMenu && <div className="my-layout-container-sider">{<Sider position="outside"></Sider>}</div>}
       <div className="my-layout-container-main">
         <div className="my-layout-container-header">
           <div className="my-layout-container-bread">
             <Breadcrumb items={bread}></Breadcrumb>
           </div>
           <div className="my-layout-container-theme">
-            <Switch
-              checked={theme === 'dark'}
-              checkedChildren={<StarOutlined />}
-              unCheckedChildren={<BulbOutlined />}
-              onChange={() => dispatch(toggleTheme())}
-            ></Switch>
+            <ThemeSwitch></ThemeSwitch>
+          </div>
+          <div
+            className="my-layout-container-drawer-control"
+            onClick={() => {
+              setShowDrawer(true)
+            }}
+          >
+            <AlignRightOutlined />
           </div>
         </div>
         <div className="my-layout-container-content">{props.children}</div>
+        {showDrawer && <DrawerMenu onClose={() => setShowDrawer(false)}></DrawerMenu>}
       </div>
     </div>
   )
