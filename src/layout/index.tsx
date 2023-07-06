@@ -57,18 +57,24 @@ const Layout: React.FC<{ children: React.ReactNode }> = props => {
     setBread(menuList[1].find(item => item.path === window.location.pathname)?.breadList!)
   }
 
+  const initLayout = () => {
+    if (window.innerWidth > 750) {
+      setShowDrawer(false)
+      setShowMenu(true)
+    } else {
+      setShowMenu(false)
+    }
+  }
+
   useEffect(() => {
     getBreadcrumb()
   }, [window.location.pathname])
 
   useEffect(() => {
+    initLayout()
+
     window.addEventListener('resize', function () {
-      if (window.innerWidth > 750) {
-        setShowDrawer(false)
-        setShowMenu(true)
-      } else {
-        setShowMenu(false)
-      }
+      initLayout()
     })
 
     return () => {
