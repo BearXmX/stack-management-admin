@@ -4,10 +4,9 @@ import { BulbOutlined, StarOutlined } from '@ant-design/icons'
 import { useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import type { MenuProps } from 'antd'
-import { menus } from '../route'
-import './index.css'
-
-import { toggleTheme } from '../store/theme-reducer'
+import { menus } from '@/route'
+import { toggleTheme } from '@/store/theme-reducer'
+import './index.less'
 
 const Layout: React.FC<{ children: React.ReactNode }> = props => {
   const [currentPath, setCurrentPath] = useState<string>(window.location.pathname)
@@ -83,7 +82,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = props => {
       <div className="my-layout-container-sider">
         <Menu
           mode="inline"
-          style={{ width: 256, height: '100%' }}
+          style={{ width: '100%', height: '100%' }}
           defaultSelectedKeys={[currentPath]}
           onClick={menuClick}
           defaultOpenKeys={menus.map(item => item.key as string)}

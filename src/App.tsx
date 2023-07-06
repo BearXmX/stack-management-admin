@@ -1,6 +1,6 @@
-import { Button, ConfigProvider, theme as AntdTheme } from 'antd'
+import { ConfigProvider, theme as AntdTheme } from 'antd'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import routes from './route'
+import routes from '@/route'
 import { useSelector } from 'react-redux'
 import { useEffect } from 'react'
 
