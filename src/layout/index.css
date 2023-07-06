@@ -1,0 +1,37 @@
+.my-layout-container {
+  display: flex;
+  height: 100%;
+}
+
+.my-layout-container .my-layout-container-sider {
+  height: 100%;
+}
+
+.my-layout-container .my-layout-container-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.my-layout-container .my-layout-container-main .my-layout-container-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px;
+  height: 60px;
+  box-shadow: 2px 3px 8px 1px #edeaea;
+  background-color: var(--header-background-color);
+  color: var(--text-color);
+}
+
+.my-layout-container .my-layout-container-main .my-layout-container-content {
+  padding: 16px;
+  flex: 1;
+  color: var(--text-color);
+}
+
+html[theme='dark'] .my-layout-container .my-layout-container-main .my-layout-container-header {
+  border-bottom: 1px solid rgba(253, 253, 253, 0.12);
+  box-shadow: none;
+}
