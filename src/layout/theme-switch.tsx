@@ -14,7 +14,13 @@ const ThemeSwitch: React.FC = () => {
       checked={theme === 'light'}
       checkedChildren={<IconComponent type="icon-guandeng" style={{ transform: 'scale(2.8)' }} />}
       unCheckedChildren={<IconComponent type="icon-kaideng" style={{ transform: 'scale(2.8)' }} />}
-      onChange={() => dispatch(toggleTheme())}
+      onChange={() =>
+        dispatch(
+          toggleTheme({
+            theme: theme === 'light' ? 'dark' : 'light',
+          })
+        )
+      }
     ></Switch>
   )
 }
