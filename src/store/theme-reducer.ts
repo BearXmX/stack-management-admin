@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit'
 export const counterSlice = createSlice({
   name: 'theme',
   initialState: {
-    theme: JSON.parse(localStorage.getItem('theme')!) || 'light',
+    theme: JSON.parse(localStorage.getItem('theme')!) || 'dark',
   },
   reducers: {
     toggleTheme: state => {

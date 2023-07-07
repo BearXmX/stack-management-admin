@@ -1,18 +1,19 @@
 import { Switch } from 'antd'
 import { toggleTheme } from '@/store/theme-reducer'
-import { BulbOutlined, StarOutlined } from '@ant-design/icons'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
+import { useStoreState } from '@/hooks'
+import IconComponent from '@/components/icon-component'
 
 const ThemeSwitch: React.FC = () => {
-  const theme = useSelector<any>(state => state.theme.theme) as string
+  const theme = useStoreState<'dark' | 'light'>(['theme', 'theme'])
 
   const dispatch = useDispatch()
 
   return (
     <Switch
-      checked={theme !== 'dark'}
-      checkedChildren={<StarOutlined />}
-      unCheckedChildren={<BulbOutlined />}
+      checked={theme === 'light'}
+      checkedChildren={<IconComponent type="icon-guandeng" style={{ transform: 'scale(2.8)' }} />}
+      unCheckedChildren={<IconComponent type="icon-kaideng" style={{ transform: 'scale(2.8)' }} />}
       onChange={() => dispatch(toggleTheme())}
     ></Switch>
   )

@@ -1,11 +1,13 @@
 import { ConfigProvider, theme as AntdTheme } from 'antd'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import routes from '@/route'
-import { useSelector } from 'react-redux'
 import { useEffect } from 'react'
+import { useStoreState } from './hooks'
 
 const App: React.FC = () => {
-  const theme = useSelector<any>(state => state.theme.theme) as string
+  const theme = useStoreState<'dark' | 'light'>(['theme', 'theme'])
+
+  console.log(theme, 'theme')
 
   useEffect(() => {
     document.documentElement.setAttribute('theme', theme)
