@@ -20,9 +20,11 @@ type tupleToUnion<T> = T extends Array<infer R> ? R : never
 // 将storeStateType的一级key转成元祖
 type firstStateKey = unionToUnionTurple<keyof storeStateType>
 
+declare type themeType = 'dark' | 'light'
+
 declare interface storeStateType {
   theme: {
-    theme: 'dark' | 'light'
+    theme: themeType
   }
 }
 
@@ -31,3 +33,14 @@ declare type storeNameSpace = tupleToUnion<firstStateKey>
 
 // storeStateKeysType 为storeStateType可取的key元祖类型 ['theme'] => {theme: 'dark' | 'light'} or ['theme','theme'] => 'dark' | 'light'
 declare type storeStateKeysType = deepAllKeys<storeStateType> | firstStateKey
+
+declare type routeProps = Partial<{
+  types: 'subMenu' | 'menu' | 'generalRoute'
+  label: string
+  key: string
+  routes: routeProps[]
+  path: string
+  element: JSX.Element
+  icon: React.ReactNode
+  breadList: { title: string }[]
+}>

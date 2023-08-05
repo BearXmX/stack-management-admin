@@ -1,16 +1,37 @@
-import { Drawer } from 'antd'
 import Sider from './sider'
-import ThemeSwitch from './theme-switch'
+import CommonDrawer from '@/components/common-drawer'
+import ThemeSwitch from '@/components/theme-switch'
+
+import { useNavigate } from 'react-router-dom'
 
 interface DrawerMenuProps {
   onClose: () => void
 }
 
 const DrawerMenu: React.FC<DrawerMenuProps> = props => {
+  const go = useNavigate()
+
   return (
-    <Drawer open width={300} title={<ThemeSwitch />} onClose={props.onClose} footer={null}>
+    <CommonDrawer
+      drawerProps={{
+        open: true,
+        width: 300,
+        title: <ThemeSwitch />,
+      }}
+      onCancelBtnProps={{
+        onClick: () => {
+          props.onClose()
+        },
+      }}
+      onOkBtnProps={{
+        text: '登出',
+        onClick: () => {
+          go('/login')
+        },
+      }}
+    >
       <Sider position="drawer"></Sider>
-    </Drawer>
+    </CommonDrawer>
   )
 }
 

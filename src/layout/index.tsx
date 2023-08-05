@@ -1,12 +1,13 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import { Breadcrumb } from 'antd'
 import { AlignRightOutlined } from '@ant-design/icons'
-import { menus } from '@/route'
-import './index.less'
 
-import Sider from './sider'
-import DrawerMenu from './drawer-menu'
-import ThemeSwitch from './theme-switch'
+import Sider from '@/layout/sider'
+import DrawerMenu from '@/layout/drawer-menu'
+import ThemeSwitch from '@/components/theme-switch'
+import { siderMenus } from '@/router/menu-router'
+
+import './index.less'
 
 const Layout: React.FC<{ children: React.ReactNode }> = props => {
   const [bread, setBread] = useState<{ title: string }[]>([])
@@ -17,8 +18,8 @@ const Layout: React.FC<{ children: React.ReactNode }> = props => {
 
   const menuList = useMemo(() => {
     // 递归增加面包屑
-    function deep(list: typeof menus, breadList: { title: string }[]): typeof menus {
-      return list.map<(typeof menus)[0]>(item => {
+    function deep(list: routeProps[], breadList: { title: string }[]): routeProps[] {
+      return list.map<routeProps[][0]>(item => {
         const currentBread = [
           ...breadList,
           {
@@ -28,22 +29,22 @@ const Layout: React.FC<{ children: React.ReactNode }> = props => {
         return {
           ...item,
           breadList: currentBread,
-          children: Array.isArray(item.children) ? deep(item.children, currentBread) : undefined,
+          routes: Array.isArray(item.routes) ? deep(item.routes, currentBread) : undefined,
         }
       })
     }
 
-    const breadList = deep(menus, [])
+    const breadList = deep(siderMenus, [])
 
     // 平铺后的数据
-    const flatList: typeof menus = []
+    const flatList: routeProps[] = []
 
-    function flat(list: typeof menus) {
+    function flat(list: routeProps[]) {
       list.forEach(item => {
         flatList.push(item)
 
-        if (!!item.children) {
-          flat(item.children)
+        if (!!item.routes) {
+          flat(item.routes)
         }
       })
     }
@@ -102,7 +103,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = props => {
             <AlignRightOutlined />
           </div>
         </div>
-        <div className="my-layout-container-content">{props.children}</div>
+        <div className="my-layout-container-content"> {props.children}</div>
         {showDrawer && <DrawerMenu onClose={() => setShowDrawer(false)}></DrawerMenu>}
       </div>
     </div>

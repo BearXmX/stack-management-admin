@@ -1,45 +1,4 @@
-* {
-  padding: 0;
-  margin: 0;
-  box-sizing: border-box;
-}
-
-body,
-html,
-#root,
-.App {
-  height: 100%;
-}
-
-.App {
-  min-width: 350px;
-}
-
-html {
-  background-color: #fff;
-  --header-background-color: #fff;
-  --text-color: #000;
-}
-
-html[theme='dark'] {
-  background-color: #000;
-  --header-background-color: #1d1d1d;
-  --text-color: #fff;
-}
-
-html[theme='light'] {
-  background-color: #fff;
-  --header-background-color: #fff;
-  --text-color: #000;
-}
-
-.ant-drawer-header {
-  padding: 12px !important;
-  .ant-drawer-header-title {
-    flex-direction: row-reverse;
-  }
-
-  .ant-drawer-header-title .ant-drawer-close {
-    margin-right: 0;
-  }
-}
+@import './assets/style/base.less';
+@import './assets/style/common.less';
+@import './assets/style/library.less';
+@import './assets/style/theme.less';

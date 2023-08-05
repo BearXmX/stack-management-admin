@@ -5,7 +5,7 @@ import { useStoreState } from '@/hooks'
 import IconComponent from '@/components/icon-component'
 
 const ThemeSwitch: React.FC = () => {
-  const theme = useStoreState<'dark' | 'light'>(['theme', 'theme'])
+  const theme = useStoreState<themeType>(['theme', 'theme'])
 
   const dispatch = useDispatch()
 

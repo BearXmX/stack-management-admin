@@ -1,8 +1,10 @@
-import React, { useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { Menu } from 'antd'
 import { useNavigate } from 'react-router-dom'
+
+import { siderMenus } from '@/router/menu-router'
+
 import type { MenuProps } from 'antd'
-import { menus } from '@/route'
 
 interface SiderProps {
   position: 'drawer' | 'outside'
@@ -12,6 +14,15 @@ const Sider: React.FC<SiderProps> = props => {
   const [currentPath, setCurrentPath] = useState<string>(window.location.pathname)
 
   const navigate = useNavigate()
+
+  const meunList = useMemo(() => {
+    return siderMenus.map(item => {
+      return {
+        ...item,
+        children: item.routes,
+      }
+    })
+  }, [siderMenus])
 
   /**
    * @description: 点击menu菜单的回调
@@ -27,8 +38,8 @@ const Sider: React.FC<SiderProps> = props => {
       style={{ width: '100%', height: '100%' }}
       defaultSelectedKeys={[currentPath]}
       onClick={menuClick}
-      defaultOpenKeys={menus.map(item => item.key as string)}
-      items={menus as MenuProps['items']}
+      defaultOpenKeys={siderMenus.map(item => item.key as string)}
+      items={meunList as MenuProps['items']}
       className={props.position === 'drawer' ? 'my-layout-container-drawerSider' : undefined}
     />
   )

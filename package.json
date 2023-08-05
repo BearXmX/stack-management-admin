@@ -15,6 +15,7 @@
     "antd": "^5.6.4",
     "craco": "0.0.3",
     "craco-less": "^2.0.0",
+    "inquirer": "^8.2.6",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-redux": "^8.1.1",
@@ -26,7 +27,8 @@
   "scripts": {
     "start": "craco start",
     "build": "craco build",
-    "test": "craco test"
+    "create-page": "node ./src/assets/script/create-page.js",
+    "create-component": "node ./src/assets/script/create-component.js"
   },
   "eslintConfig": {
     "extends": [

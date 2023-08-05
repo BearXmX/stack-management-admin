@@ -1,13 +1,13 @@
+import { useEffect, useState } from 'react'
 import { ConfigProvider, theme as AntdTheme } from 'antd'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import routes from '@/route'
-import { useEffect } from 'react'
-import { useStoreState } from './hooks'
+
+import routes from '@/router'
+import MiddleWareLayout from '@/layout/middleware-layout'
+import { useStoreState } from '@/hooks'
 
 const App: React.FC = () => {
-  const theme = useStoreState<'dark' | 'light'>(['theme', 'theme'])
-
-  console.log(theme, 'theme')
+  const theme = useStoreState<themeType>(['theme', 'theme'])
 
   useEffect(() => {
     document.documentElement.setAttribute('theme', theme)
@@ -21,7 +21,13 @@ const App: React.FC = () => {
         <BrowserRouter>
           <Routes>
             {routes.map(item => {
-              return <Route path={item.path} element={item.element} key={item.path}></Route>
+              return (
+                <Route
+                  path={item.path}
+                  element={<MiddleWareLayout currentPath={item.path as string}>{item.element}</MiddleWareLayout>}
+                  key={item.key}
+                ></Route>
+              )
             })}
           </Routes>
         </BrowserRouter>
