@@ -34,7 +34,7 @@ const Login: React.FC<PropsType> = props => {
           {Array(6)
             .fill(null)
             .map((item, index) => {
-              return <div className="login-mask-radiu" key={index}></div>
+              return <div className="login-mask-radius" key={index}></div>
             })}
         </div>
         <div className="login-page-form-container">
