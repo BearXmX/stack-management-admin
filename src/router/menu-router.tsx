@@ -1,26 +1,33 @@
-import { Navigate } from 'react-router-dom'
+import Layout from '@/layout'
 import { MailOutlined } from '@ant-design/icons'
-import Layout from '../layout'
-import PageNotFound from '../pages/404'
 
-type routeProps = Partial<{
-  types: 'subMenu' | 'menu' | 'speciaRoute'
-  label: string
-  key: string
-  children: routeProps[]
-  path: string
-  element: JSX.Element
-  icon: React.ReactNode
-  breadList: { title: string }[]
-}>
+function flatLayoutMenuRoutes() {
+  const routes: routeProps[] = []
 
-export const menus: routeProps[] = [
+  function flat(layoutList: routeProps[]) {
+    layoutList.forEach(item => {
+      if (!!item.path && item.types === 'menu') {
+        routes.push(item)
+      }
+
+      if (Array.isArray(item.routes) && item.types === 'subMenu') {
+        flat(item.routes)
+      }
+    })
+  }
+
+  flat(siderMenus)
+
+  return routes
+}
+
+export const siderMenus: routeProps[] = [
   {
     types: 'subMenu',
     key: '/cockpit',
     label: '驾驶舱',
     icon: <MailOutlined />,
-    children: [
+    routes: [
       {
         types: 'menu',
         key: '/cockpit/cockpit-1',
@@ -50,7 +57,7 @@ export const menus: routeProps[] = [
     key: '/goods',
     label: '商品列表',
     icon: <MailOutlined />,
-    children: [
+    routes: [
       {
         types: 'menu',
         key: '/goods/goods-1',
@@ -75,43 +82,38 @@ export const menus: routeProps[] = [
       },
     ],
   },
-]
-
-function flatLayoutMenuRoutes() {
-  const routes: routeProps[] = []
-
-  function flat(layoutList: routeProps[]) {
-    layoutList.forEach(item => {
-      if (!!item.path && item.types === 'menu') {
-        routes.push(item)
-      }
-
-      if (Array.isArray(item.children) && item.types === 'subMenu') {
-        flat(item.children)
-      }
-    })
-  }
-
-  flat(menus)
-
-  return routes
-}
-
-export const flatRoutes = flatLayoutMenuRoutes()
-
-const speciaRoute: routeProps[] = [
   {
-    path: '/',
-    key: '/',
-    types: 'speciaRoute',
-    element: <Navigate to={flatRoutes[0].path as string} />,
-  },
-  {
-    path: '*',
-    key: '*',
-    types: 'speciaRoute',
-    element: <PageNotFound />,
+    types: 'subMenu',
+    key: '/user',
+    label: '用户中心',
+    icon: <MailOutlined />,
+    routes: [
+      {
+        types: 'menu',
+        key: '/user/user-1',
+        path: '/user/user-1',
+        label: '用户中心-1',
+        element: (
+          <Layout>
+            <div>用户中心-1</div>
+          </Layout>
+        ),
+      },
+      {
+        types: 'menu',
+        key: '/user/user-2',
+        path: '/user/user-2',
+        label: '用户中心-2',
+        element: (
+          <Layout>
+            <div>用户中心-2</div>
+          </Layout>
+        ),
+      },
+    ],
   },
 ]
 
-export default [...flatRoutes, ...speciaRoute]
+const flatMenuRoutes = flatLayoutMenuRoutes()
+
+export default flatMenuRoutes
